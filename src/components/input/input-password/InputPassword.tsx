@@ -27,8 +27,9 @@ const InputPassword: FC<InputPasswordProps> = ({label, setValue, value, inputPro
                 width: "80%",
                 padding: 16,
                 textAlign: "right",
-                fontFamily: "Sans-Bold"
-            }, styles]} />
+                fontFamily: "Sans-Bold",
+                color: theme.background.text
+            }, styles]} placeholderTextColor={theme.background.text} {...inputProps} />
         </View>
     )
 }

@@ -24,7 +24,7 @@ const Login: FC = () => {
                     <InputPassword label="رمزعبور" value={password} setValue={setPassword} />
                 </View>
             </View>
-            <View style={{flexDirection: "row", gap: 16, alignItems: "center"}} >
+            <View style={{flexDirection: "row", gap: 16, alignItems: "center", marginBottom: 8}} >
                 <Btn label="بازگشت" pallete={{text: theme.primary.color, color: theme.nav.color}} onPress={() => router.back()} />
                 <Btn label="ورود" pallete={theme.primary} />
             </View>

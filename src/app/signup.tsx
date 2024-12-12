@@ -26,7 +26,7 @@ const Signup: FC = () => {
                     <InputPassword label="تکرار رمز عبور" value={confirmPassword} setValue={setConfirmPassword} />
                 </View>
             </View>
-            <View style={{flexDirection: "row", gap: 16, alignItems: "center"}} >
+            <View style={{flexDirection: "row", gap: 16, alignItems: "center", marginBottom: 8}} >
                 <Btn label="بازگشت" pallete={{text: theme.primary.color, color: theme.nav.color}} onPress={() => router.back()} />
                 <Btn label="ثبت نام" pallete={theme.primary} />
             </View>
