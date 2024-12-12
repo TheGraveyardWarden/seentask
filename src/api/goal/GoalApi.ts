@@ -9,6 +9,10 @@ class GoalApi extends Api {
     static get_details(id: string): Promise<IGoalDetail> {
         return this.getData(`/api/goal/detail/${id}`);
     }
+
+    static start(id: string): Promise<IGoalDetail> {
+        return this.postData(`/api/goal/start/${id}`);
+    }
 }
 
 export default GoalApi;

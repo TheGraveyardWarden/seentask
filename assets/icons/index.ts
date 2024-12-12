@@ -8,6 +8,8 @@ import TaskManagementIcon from "./TaskManagementIcon";
 import ArrowLeftIcon from "./ArrowLeftIcon";
 import CalendarIcon from "./CalendarIcon";
 import DotsIcon from "./DotsIcon";
+import TaskAddIcon from "./TaskAddIcon";
 import CheckIcon from "./CheckIcon";
+import AIIcon from "./AIIcon";
 
-export {EyeIcon, DashboardIcon, MediaIcon, ProfileIcon, TaskIcon, TrophyIcon, TaskManagementIcon, ArrowLeftIcon, CalendarIcon, DotsIcon, CheckIcon};
+export {EyeIcon, DashboardIcon, MediaIcon, ProfileIcon, TaskIcon, TrophyIcon, TaskManagementIcon, ArrowLeftIcon, CalendarIcon, DotsIcon, CheckIcon, TaskAddIcon, AIIcon};

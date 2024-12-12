@@ -2,7 +2,7 @@ import { useLocalSearchParams } from "expo-router";
 import { FC, useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 import Header from "../../../components/header";
-import { CalendarIcon, DotsIcon } from "../../../../assets/icons";
+import { AIIcon, CalendarIcon, DotsIcon, TaskAddIcon } from "../../../../assets/icons";
 import { GoalApi } from "../../../api";
 import { IGoalDetail } from "../../../types/goal";
 import { Heading } from "../../../components/typo";
@@ -11,6 +11,7 @@ import { parse_goal_difficulity, parse_goal_prio } from "../../../utils/parser";
 import { getDateStr } from "../../../utils/date";
 import GoalProgress from "../../../components/goal/progress/GoalProgress";
 import { GoalTask } from "../../../components/goal";
+import { Btn, BtnIcon } from "../../../components/btn";
 
 const GoalDetail: FC = () => {
     const theme = useThemeStore(s => s.theme);
@@ -26,10 +27,19 @@ const GoalDetail: FC = () => {
         })
     }, [])
 
+    const onStart = () => {
+        if (!goal) return;
+        GoalApi.start(goal?._id.$oid).then(res => {
+            setGoal(res);
+        }).catch(err => {
+            pushAlert(err.msg, "error");
+        })
+    }
+
     if (!goal) return <Heading color={theme.background.text}>Loading...</Heading>
 
     return (
-        <View>
+        <View style={{flex: 1}}>
             <View style={{
                 padding: 24,
                 borderBottomColor: theme.icon.color,
@@ -60,6 +70,12 @@ const GoalDetail: FC = () => {
                     <GoalTask {...task} key={task._id.$oid} />
                 ))}
             </ScrollView>
+            
+            <View style={{position: "absolute", bottom: 40, width: "100%", flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8}}>
+                <BtnIcon styles={{borderColor: theme.primary.color, borderWidth: 1}} Icon={AIIcon} label="" pallete={{color: theme.nav.color, text: theme.primary.color}} />
+                {goal.status === "created" ? <Btn onPress={onStart} label="شروع" pallete={{color: theme.nav.color, text: theme.primary.color}} styles={{borderColor: theme.primary.color, borderWidth: 1, minWidth: 76, height: 40}} /> : <></>}
+                <BtnIcon Icon={TaskAddIcon} label="افزودن وظیفه" pallete={theme.primary} />
+            </View>
         </View>
     )
 }

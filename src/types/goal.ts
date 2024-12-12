@@ -16,11 +16,17 @@ export interface IGoalOverview {
 
 export type GoalTaskStatusType = "waiting" | "inprogress" | "finishedontime" | "finisheddelayed";
 
+export interface IGoalTaskTime {
+    days: number;
+    hours: number;
+    minutes: number;
+}
+
 export interface IGoalTask {
     title: string;
     weight: number;
     status: GoalTaskStatusType;
-    time: number;
+    time: IGoalTaskTime;
     _id: ObjectID;
     finished_at: Timestamp;
 }

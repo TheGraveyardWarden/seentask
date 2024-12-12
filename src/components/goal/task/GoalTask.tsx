@@ -1,30 +1,29 @@
 import { FC } from "react";
 import { IGoalTask } from "../../../types/goal";
 import { TouchableOpacity, View } from "react-native";
-import { Checkbox } from "../../btn";
 import { Heading, Text } from "../../typo";
-import { useThemeStore } from "../../../stores";
-import { getDateStr } from "../../../utils/date";
-import { is_task_finished } from "../../../utils/parser";
+import { getDateStr, getTimeStr } from "../../../utils/date";
+import { get_task_bg, goal_task_time_to_string, is_task_finished } from "../../../utils/parser";
+import { AIIcon } from "../../../../assets/icons";
 
 const GoalTask: FC<IGoalTask> = ({_id, status, time, title, weight, finished_at}) => {
-    const theme = useThemeStore(s => s.theme)
+    const pallete = get_task_bg(status);
 
     const handlePress = () => {
     }
 
     return (
-        <TouchableOpacity onPress={handlePress} style={{direction: "rtl", paddingHorizontal: 26}}>
-            <View style={{flexDirection: "row", gap: 4, alignItems: "flex-start", justifyContent: "space-between"}}>
+        <TouchableOpacity onPress={handlePress} style={{direction: "rtl", paddingHorizontal: 13, marginHorizontal: 13, borderRadius: 8, paddingVertical: 10, backgroundColor: pallete.color}}>
+            <View style={{flexDirection: "row", gap: 4, alignItems: "center", justifyContent: "space-between"}}>
                 <View style={{flexDirection: "row", gap: 4, alignItems: "flex-start"}}>
-                    <Checkbox value={is_task_finished(status)} setValue={(v) => {}} />
                     <View style={{flexDirection: "column", gap: 4}}>
-                        <Heading color={theme.background.text}>{title}</Heading>
-                        {!is_task_finished(status) ? <Text color={theme.icon.color}>{`${String(time)} روز`}</Text> : <>
-                            <Text color={theme.icon.color}>{getDateStr(finished_at)}</Text>
+                        <Heading color={pallete.text}>{title}</Heading>
+                        {!is_task_finished(status) ? <Text color={pallete.text}>{goal_task_time_to_string(time)}</Text> : <>
+                            <Text color={pallete.text}>{`${getDateStr(finished_at)} ${getTimeStr(finished_at)}`}</Text>
                         </>}
                     </View>
                 </View>
+                <AIIcon color={pallete.text} />
             </View>
         </TouchableOpacity>
     )

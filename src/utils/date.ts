@@ -68,6 +68,16 @@ export const getDateStr = (time: Timestamp): string => {
     .format("MM")} / ${moment(d, "YYYY/MM/DD").locale("fa").format("YYYY")}`;
 };
 
+export const zfill = (number: number, width: number = 2): string => {
+  const numString = String(number);
+  return numString.padStart(width, "0");
+};
+
+export const getTimeStr = (time: Timestamp): string => {
+  const d = new Date(time);
+  return `${zfill(d.getHours())}:${zfill(d.getMinutes())}`;
+};
+
 export const getDaysFromNow = (n: number): Timestamp => {
   let d = new Date(Date.now());
   d.setDate(d.getDate() + n);
