@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { Heading } from "../../../components/typo";
+import TasksLayout from "./_layout";
 
 const Tasks: FC = () => {
-    return <Heading color="black">im tasks</Heading>
+    return <TasksLayout/>
 }
 
-export default Tasks
+export default Tasks;

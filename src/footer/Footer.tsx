@@ -13,7 +13,7 @@ const NAV_DATA: NavData[] = [
     },
     {
         Icon: TaskIcon,
-        route: "/tasks",
+        route: "/tasks/goals",
         name: "tasks"
     },
     {
@@ -72,7 +72,7 @@ const Footer: FC = () => {
                 justifyContent: "space-evenly"
             }}>
                 {NAV_DATA.map((data, i) => (
-                    <TouchableOpacity key={data.route} onPress={() => onNavClick(data.route)}>
+                    <TouchableOpacity style={{padding: 8}} key={data.route} onPress={() => onNavClick(data.route)}>
                         <data.Icon width={20} height={20} color={colors[i]} />
                     </TouchableOpacity>
                 ))}

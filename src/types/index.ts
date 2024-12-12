@@ -29,3 +29,16 @@ export interface ObjectID {
 
 export type Updater<T> = T | ((prev: T) => T);
 export type UpdateFn<T> = (v: Updater<T>) => void;
+
+export type Timestamp = number;
+
+export interface DateRange {
+  from: Timestamp;
+  to: Timestamp;
+}
+
+export interface YMD {
+  day: string;
+  month: string;
+  year: string;
+}
