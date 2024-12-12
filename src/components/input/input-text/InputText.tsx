@@ -6,7 +6,7 @@ import { useThemeStore } from "../../../stores";
 const InputText: FC<InputTextProps> = ({label, setValue, value, inputProps={}, styles={}}) => {
     const theme = useThemeStore(s => s.theme);
 
-    return <TextInput placeholder={label} value={value} style={[{fontFamily: "Sans-Bold", color: theme.background.text}, styles]} placeholderTextColor={theme.background.text} {...inputProps} onChangeText={setValue} />
+    return <TextInput placeholder={label} value={value} style={[{fontFamily: "Sans-Bold", color: theme.background.text}, styles]} placeholderTextColor={theme.icon.color} {...inputProps} onChangeText={setValue} />
 }
 
 export default InputText;

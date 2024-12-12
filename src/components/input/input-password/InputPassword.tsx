@@ -1,7 +1,6 @@
 import { FC, useState } from "react";
-import { InputPasswordProps, InputTextProps } from "../types";
+import { InputPasswordProps } from "../types";
 import { TextInput, TouchableOpacity, View } from "react-native";
-import Input from "../input/Input";
 import { EyeIcon } from "../../../../assets/icons";
 import { useThemeStore } from "../../../stores";
 
@@ -22,14 +21,14 @@ const InputPassword: FC<InputPasswordProps> = ({label, setValue, value, inputPro
             gap: 10
 
         }, conStyles]}>
-            <TouchableOpacity style={{marginLeft: 3}} onPress={() => setSecure(prev => !prev)}><EyeIcon/></TouchableOpacity>
+            <TouchableOpacity style={{marginLeft: 16}} onPress={() => setSecure(prev => !prev)}><EyeIcon/></TouchableOpacity>
             <TextInput value={value} onChangeText={setValue} placeholder={label} secureTextEntry={secure} style={[{
                 width: "80%",
                 padding: 16,
                 textAlign: "right",
                 fontFamily: "Sans-Bold",
                 color: theme.background.text
-            }, styles]} placeholderTextColor={theme.background.text} {...inputProps} />
+            }, styles]} placeholderTextColor={theme.icon.color} {...inputProps} />
         </View>
     )
 }

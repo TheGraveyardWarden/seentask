@@ -19,7 +19,7 @@ const Auth: FC = () => {
             <Image source={logo} style={{marginTop: 51}} />
             <View style={{flexDirection: "column", alignItems: "center", width: "100%", marginBottom: 8}}>
                 <Image source={girl} style={{marginBottom: -25, zIndex: 10}} />
-                <View style={{height: 280, width: "100%", borderRadius: 16, backgroundColor: theme.primary.color}} >
+                <View style={{height: 280, width: "95%", borderRadius: 16, backgroundColor: theme.primary.color}} >
                     <Heading color={theme.primary.text} styles={{textAlign: "center", marginTop: 64, marginBottom: 48}} size={22}>خوش آمدید</Heading>
                     <TouchableOpacity onPress={onLogin} style={{marginHorizontal: 12, backgroundColor: theme.background.color, height: 48, borderRadius: 8, alignItems: "center", justifyContent: "center", marginBottom: 17}} >
                         <Heading color={theme.background.text} styles={{textAlign: "center"}}>ورود</Heading>
