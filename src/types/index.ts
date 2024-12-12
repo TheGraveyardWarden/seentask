@@ -22,3 +22,10 @@ export enum ThemeVariant {
 }
 
 export type FontFamily = "Sans-Bold" | "Sans-Regular";
+
+export interface ObjectID {
+    $oid: string;
+}
+
+export type Updater<T> = T | ((prev: T) => T);
+export type UpdateFn<T> = (v: Updater<T>) => void;

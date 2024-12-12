@@ -3,7 +3,7 @@ import React, { type FunctionComponent, useEffect } from "react";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useThemeStore } from "./src/stores";
-import { View } from "react-native";
+import Layout from "./src/app/_layout";
 
 /**
  * Important note: It is recommended
@@ -16,7 +16,6 @@ import { View } from "react-native";
 SplashScreen.preventAutoHideAsync();
 
 const App: FunctionComponent = () => {
-    const theme = useThemeStore(s => s.theme);
     const loadTheme = useThemeStore(s => s.loadTheme);
 
     useEffect(() => {
@@ -43,9 +42,7 @@ const App: FunctionComponent = () => {
     if (!fontsLoaded && fontError === null) return null;
 
     return (
-        <View style={{flex: 1, backgroundColor: theme.background.color}}>
-          
-        </View>
+        <Layout/>
     );
 };
 
