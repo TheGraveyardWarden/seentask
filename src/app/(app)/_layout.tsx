@@ -6,6 +6,7 @@ import { useThemeStore, useUserStore } from "../../stores";
 import { ThemeVariant } from "../../types";
 import { Heading } from "../../components/typo";
 import Alerts from "../../alert";
+import { Footer } from "../../footer";
 
 const Layout: FC = () => {
     const active_theme = useThemeStore(s => s.active_theme);
@@ -26,6 +27,7 @@ const Layout: FC = () => {
         <StatusBar style={active_theme === ThemeVariant.DARK ? "light" : "dark"} />
         <Alerts/>
         <Slot/>
+        <Footer/>
     </SafeAreaView>
 }
 

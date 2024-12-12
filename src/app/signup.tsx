@@ -20,7 +20,7 @@ const Signup: FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
 
     const onSignup = () => {
-        if (!username || !password || password !== confirmPassword) return;
+        if (!username || !password || password !== confirmPassword) return pushAlert("invalid fields!", "error");
         setLoading(true);
         UserApi.signup(username, password, confirmPassword).then(res => {
             setUser(res.data);

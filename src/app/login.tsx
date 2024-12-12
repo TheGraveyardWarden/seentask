@@ -19,7 +19,7 @@ const Login: FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
 
     const onLogin = () => {
-        if (!username || !password) return pushAlert("invalid fields!");
+        if (!username || !password) return pushAlert("invalid fields!", "error");
 
         setLoading(true);
         UserApi.login(username, password).then(res => {
@@ -27,7 +27,7 @@ const Login: FC = () => {
             store_save("token", res.headers["x-auth"]);
             router.replace("/");
         }).catch(err => {
-            pushAlert(err.msg, err);
+            pushAlert(err.msg, "error");
         }).finally(() => {
             setLoading(false);
         })
