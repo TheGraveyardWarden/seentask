@@ -1,15 +1,22 @@
-import { FC } from "react";
-import { IGoalTask } from "../../../types/goal";
+import { FC, useState } from "react";
 import { TouchableOpacity, View } from "react-native";
 import { Heading, Text } from "../../typo";
 import { getDateStr, getTimeStr } from "../../../utils/date";
 import { get_task_bg, goal_task_time_to_string, is_task_finished } from "../../../utils/parser";
 import { AIIcon } from "../../../../assets/icons";
+import { useThemeStore } from "../../../stores";
+import { FinishGoalTaskModal } from "../modals";
+import { GoalTaskProps } from "./types";
 
-const GoalTask: FC<IGoalTask> = ({_id, status, time, title, weight, finished_at}) => {
+const GoalTask: FC<GoalTaskProps> = ({goal, task, setGoal}) => {
+    const {_id, status, time, title, weight, finished_at} = task;
+    const theme = useThemeStore(s => s.theme);
     const pallete = get_task_bg(status);
+    const [finishModalVisible, setFinishModalVisible] = useState<boolean>(false);
 
     const handlePress = () => {
+        if (status !== "inprogress") return;
+        setFinishModalVisible(true);
     }
 
     return (
@@ -23,7 +30,8 @@ const GoalTask: FC<IGoalTask> = ({_id, status, time, title, weight, finished_at}
                         </>}
                     </View>
                 </View>
-                <AIIcon color={pallete.text} />
+                <AIIcon color={status === "waiting" ? theme.primary.color : pallete.text} />
+                <FinishGoalTaskModal setGoal={setGoal} goal={goal} task={task} setVisible={setFinishModalVisible} visible={finishModalVisible} />
             </View>
         </TouchableOpacity>
     )

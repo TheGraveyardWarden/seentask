@@ -12,6 +12,7 @@ import { getDateStr } from "../../../utils/date";
 import GoalProgress from "../../../components/goal/progress/GoalProgress";
 import { GoalTask } from "../../../components/goal";
 import { Btn, BtnIcon } from "../../../components/btn";
+import { UpdateFn } from "../../../types";
 
 const GoalDetail: FC = () => {
     const theme = useThemeStore(s => s.theme);
@@ -67,7 +68,7 @@ const GoalDetail: FC = () => {
 
             <ScrollView contentContainerStyle={{gap: 16}}>
                 {goal.tasks.map(task => (
-                    <GoalTask {...task} key={task._id.$oid} />
+                    <GoalTask setGoal={setGoal as UpdateFn<IGoalDetail>} task={task} goal={goal} key={task._id.$oid} />
                 ))}
             </ScrollView>
             
