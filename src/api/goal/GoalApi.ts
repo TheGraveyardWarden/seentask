@@ -1,4 +1,4 @@
-import { IGoalDetail, IGoalOverview } from "../../types/goal";
+import { GoalDifficulitiesType, GoalPrioType, IGoalDetail, IGoalOverview, IGoalTask, IGoalTaskTime } from "../../types/goal";
 import Api from "../api";
 
 class GoalApi extends Api {
@@ -17,6 +17,14 @@ class GoalApi extends Api {
     static finish_task(goal_id: string, task_id: string, note: string): Promise<IGoalDetail> {
         console.log(goal_id, task_id);
         return this.postData(`/api/goal/finish_task/${goal_id}/${task_id}`, {note});
+    }
+
+    static add_task(goal_id: string, title: string, required_time: IGoalTaskTime, weight: number): Promise<IGoalTask> {
+        return this.patchData(`/api/goal/add_task/${goal_id}`, {title, required_time, weight});
+    }
+
+    static create(title: string, priority: GoalPrioType, difficulity: GoalDifficulitiesType): Promise<IGoalDetail> {
+        return this.postData(`/api/goal`, {title, priority, difficulity, tasks: []});
     }
 }
 

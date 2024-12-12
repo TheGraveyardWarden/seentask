@@ -4,11 +4,12 @@ import { TouchableOpacity, View } from "react-native";
 import { useThemeStore } from "../../../stores";
 import TaskStatus from "../../goal-status";
 import { Heading } from "../../typo";
-import { parse_goal_difficulity, parse_goal_prio } from "../../../utils/parser";
 import { CalendarIcon } from "../../../../assets/icons";
 import { getDateStr } from "../../../utils/date";
 import GoalProgress from "../progress/GoalProgress";
 import { useRouter } from "expo-router";
+import Prio from "../prio/Prio";
+import Difficulity from "../difficulity/Difficulity";
 
 const GoalOverview: FC<IGoalOverview> = ({_id, created_at, difficulity, priority, progress, status, title}) => {
     const theme = useThemeStore(s => s.theme);
@@ -22,12 +23,8 @@ const GoalOverview: FC<IGoalOverview> = ({_id, created_at, difficulity, priority
                     <Heading color={theme.overlay.text} size={12} >{title}</Heading>
                 </View>
                 <View style={{flexDirection: "row-reverse", alignItems: "center", gap: 8}}>
-                    <View style={{paddingHorizontal: 16, paddingVertical: 4, borderRadius: 12.5, borderWidth: 1, borderColor: theme.primary.color, backgroundColor: theme.primary.color}}>
-                        <Heading color={theme.primary.text} size={12}>{parse_goal_prio(priority)}</Heading>
-                    </View>
-                    <View style={{paddingHorizontal: 16, paddingVertical: 4, borderRadius: 12.5, borderWidth: 1, borderColor: theme.secondary.color, backgroundColor: theme.secondary.color}}>
-                        <Heading color={theme.secondary.text} size={12}>{parse_goal_difficulity(difficulity)}</Heading>
-                    </View>
+                    <Prio active>{priority}</Prio>
+                    <Difficulity active>{difficulity}</Difficulity>
                 </View>
             </View>
 

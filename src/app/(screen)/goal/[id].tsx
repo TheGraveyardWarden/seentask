@@ -7,18 +7,20 @@ import { GoalApi } from "../../../api";
 import { IGoalDetail } from "../../../types/goal";
 import { Heading } from "../../../components/typo";
 import { useAlertStore, useThemeStore } from "../../../stores";
-import { parse_goal_difficulity, parse_goal_prio } from "../../../utils/parser";
 import { getDateStr } from "../../../utils/date";
 import GoalProgress from "../../../components/goal/progress/GoalProgress";
-import { GoalTask } from "../../../components/goal";
+import { GoalTask, Prio } from "../../../components/goal";
 import { Btn, BtnIcon } from "../../../components/btn";
 import { UpdateFn } from "../../../types";
+import { AddGoalTaskModal } from "../../../components/goal/modals";
+import Difficulity from "../../../components/goal/difficulity/Difficulity";
 
 const GoalDetail: FC = () => {
     const theme = useThemeStore(s => s.theme);
     const pushAlert = useAlertStore(s => s.pushAlert);
     const {id} = useLocalSearchParams();
     const [goal, setGoal] = useState<IGoalDetail | null>(null);
+    const [addTaskModalVisible, setAddTaskModalVisible] = useState<boolean>(false);
 
     useEffect(() => {
         GoalApi.get_details(id as string).then(res => {
@@ -49,12 +51,8 @@ const GoalDetail: FC = () => {
             }}>
                 <Header Icon={DotsIcon} title={goal.title} />
                 <View style={{flexDirection: "row-reverse", alignItems: "center", gap: 8, padding: 16}}>
-                    <View style={{paddingHorizontal: 16, paddingVertical: 4, borderRadius: 12.5, borderWidth: 1, borderColor: theme.primary.color, backgroundColor: theme.primary.color}}>
-                        <Heading color={theme.primary.text} size={12}>{parse_goal_prio(goal.priority)}</Heading>
-                    </View>
-                    <View style={{paddingHorizontal: 16, paddingVertical: 4, borderRadius: 12.5, borderWidth: 1, borderColor: theme.secondary.color, backgroundColor: theme.secondary.color}}>
-                        <Heading color={theme.secondary.text} size={12}>{parse_goal_difficulity(goal.difficulity)}</Heading>
-                    </View>
+                    <Prio active>{goal.priority}</Prio>
+                    <Difficulity active>{goal.difficulity}</Difficulity>
                 </View>
 
                 <View style={{flexDirection: "row-reverse", alignItems: "center", justifyContent: "space-between", padding: 16}}>
@@ -71,12 +69,15 @@ const GoalDetail: FC = () => {
                     <GoalTask setGoal={setGoal as UpdateFn<IGoalDetail>} task={task} goal={goal} key={task._id.$oid} />
                 ))}
             </ScrollView>
+            <View style={{height: 16}}></View>
             
             <View style={{position: "absolute", bottom: 40, width: "100%", flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8}}>
                 <BtnIcon styles={{borderColor: theme.primary.color, borderWidth: 1}} Icon={AIIcon} label="" pallete={{color: theme.nav.color, text: theme.primary.color}} />
                 {goal.status === "created" ? <Btn onPress={onStart} label="شروع" pallete={{color: theme.nav.color, text: theme.primary.color}} styles={{borderColor: theme.primary.color, borderWidth: 1, minWidth: 76, height: 40}} /> : <></>}
-                <BtnIcon Icon={TaskAddIcon} label="افزودن وظیفه" pallete={theme.primary} />
+                <BtnIcon onPress={() => setAddTaskModalVisible(true)} Icon={TaskAddIcon} label="افزودن وظیفه" pallete={theme.primary} />
             </View>
+
+            <AddGoalTaskModal goal={goal} setGoal={setGoal as UpdateFn<IGoalDetail>} visible={addTaskModalVisible} setVisible={setAddTaskModalVisible} />
         </View>
     )
 }

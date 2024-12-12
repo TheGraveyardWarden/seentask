@@ -24,7 +24,7 @@ const FinishGoalTaskModal: FC<ModalProps & FinishGoalTaskModalProps> = ({visible
     }
 
     return <Modal transparent visible={visible} onRequestClose={() => setVisible(false)}>
-        <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
+        <View style={{flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
             <View style={{
                 marginHorizontal: 8,
                 borderRadius: 20,

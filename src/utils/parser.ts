@@ -2,25 +2,6 @@ import { useThemeStore } from "../stores";
 import { Color } from "../types";
 import { GoalDifficulitiesType, GoalPrioType, GoalTaskStatusType, IGoalTaskTime } from "../types/goal";
 
-export const parse_goal_prio = (prio: GoalPrioType): string => {
-    switch(prio) {
-        case "optional": return "اختیاری";
-        case "required": return "مورد نیاز";
-        case "urgent": return "فوری";
-        default: return "unknown!";
-    }
-}
-
-export const parse_goal_difficulity = (diff: GoalDifficulitiesType): string => {
-    switch(diff) {
-        case "easy": return "آسان";
-        case "moderate": return "متوسط";
-        case "hard": return "سخت";
-        case "veryhard": return "خیلی سخت";
-        default: return "unknown!";
-    }
-}
-
 export const is_task_finished = (status: GoalTaskStatusType): boolean => {
     return status === "finisheddelayed" || status === "finishedontime";
 }
@@ -43,5 +24,24 @@ export const get_task_bg = (status: GoalTaskStatusType): Color => {
         case "inprogress": return useThemeStore.getState().theme.primary;
         case "waiting": return useThemeStore.getState().theme.overlay;
         default: return {color: "red", text: "white"};
+    }
+}
+
+export const prio2farsi = (prio: GoalPrioType): string => {
+    switch(prio) {
+        case "optional": return "غیر ضروری";
+        case "required": return "ضروری";
+        case "urgent": return "فوری";
+        default: return "unknown";
+    }
+}
+
+export const diff2farsi = (diff: GoalDifficulitiesType): string => {
+    switch(diff) {
+        case "easy": return "آسان";
+        case "hard": return "سخت";
+        case "moderate": return "متوسط";
+        case "veryhard": return "خیلی سخت";
+        default: return "unknown";
     }
 }
