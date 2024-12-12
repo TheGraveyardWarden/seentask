@@ -1,4 +1,4 @@
-import { GoalDifficulitiesType, GoalPrioType } from "../types/goal";
+import { GoalDifficulitiesType, GoalPrioType, GoalTaskStatusType } from "../types/goal";
 
 export const parse_goal_prio = (prio: GoalPrioType): string => {
     switch(prio) {
@@ -17,4 +17,8 @@ export const parse_goal_difficulity = (diff: GoalDifficulitiesType): string => {
         case "veryhard": return "خیلی سخت";
         default: return "unknown!";
     }
+}
+
+export const is_task_finished = (status: GoalTaskStatusType): boolean => {
+    return status === "finisheddelayed" || status === "finishedontime";
 }

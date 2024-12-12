@@ -1,4 +1,4 @@
-import { ObjectID } from ".";
+import { ObjectID, Timestamp } from ".";
 
 export type GoalStatusType = "created" | "started" | "finished";
 export type GoalDifficulitiesType = "easy" | "moderate" | "hard" | "veryhard";
@@ -14,16 +14,17 @@ export interface IGoalOverview {
     _id: ObjectID;
 }
 
-export type TaskStatusType = "waiting" | "inprogress" | "finishedontime" | "finisheddelayed";
+export type GoalTaskStatusType = "waiting" | "inprogress" | "finishedontime" | "finisheddelayed";
 
-export interface ITask {
+export interface IGoalTask {
     title: string;
     weight: number;
-    status: TaskStatusType;
+    status: GoalTaskStatusType;
     time: number;
     _id: ObjectID;
+    finished_at: Timestamp;
 }
 
 export interface IGoalDetail extends IGoalOverview {
-    tasks: ITask[];
+    tasks: IGoalTask[];
 }

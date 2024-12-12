@@ -8,12 +8,14 @@ import { parse_goal_difficulity, parse_goal_prio } from "../../../utils/parser";
 import { CalendarIcon } from "../../../../assets/icons";
 import { getDateStr } from "../../../utils/date";
 import GoalProgress from "../progress/GoalProgress";
+import { useRouter } from "expo-router";
 
 const GoalOverview: FC<IGoalOverview> = ({_id, created_at, difficulity, priority, progress, status, title}) => {
     const theme = useThemeStore(s => s.theme);
+    const router = useRouter();
 
     return (
-        <TouchableOpacity style={{width: "100%", padding: 16, backgroundColor: theme.overlay.color, borderRadius: 16, height: 112, gap: 8, justifyContent: "space-between"}}>
+        <TouchableOpacity onPress={() => router.push(`/goal/${_id.$oid}`)} style={{width: "100%", padding: 16, backgroundColor: theme.overlay.color, borderRadius: 16, height: 112, gap: 8, justifyContent: "space-between"}}>
             <View style={{gap: 8}}>
                 <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
                     <TaskStatus status={status} />

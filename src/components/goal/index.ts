@@ -1,3 +1,4 @@
 import GoalOverview from "./overview/GoalOverview";
+import GoalTask from "./task";
 
-export default GoalOverview;
+export {GoalOverview, GoalTask};

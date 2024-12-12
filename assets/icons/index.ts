@@ -7,5 +7,7 @@ import TrophyIcon from "./TrophyIcon";
 import TaskManagementIcon from "./TaskManagementIcon";
 import ArrowLeftIcon from "./ArrowLeftIcon";
 import CalendarIcon from "./CalendarIcon";
+import DotsIcon from "./DotsIcon";
+import CheckIcon from "./CheckIcon";
 
-export {EyeIcon, DashboardIcon, MediaIcon, ProfileIcon, TaskIcon, TrophyIcon, TaskManagementIcon, ArrowLeftIcon, CalendarIcon};
+export {EyeIcon, DashboardIcon, MediaIcon, ProfileIcon, TaskIcon, TrophyIcon, TaskManagementIcon, ArrowLeftIcon, CalendarIcon, DotsIcon, CheckIcon};
