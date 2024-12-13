@@ -26,6 +26,14 @@ class GoalApi extends Api {
     static create(title: string, priority: GoalPrioType, difficulity: GoalDifficulitiesType): Promise<IGoalDetail> {
         return this.postData(`/api/goal`, {title, priority, difficulity, tasks: []});
     }
+
+    static gen_tasks(goal_id: string): Promise<IGoalDetail> {
+        return this.getData(`/api/ai/gen_tasks/${goal_id}`);
+    }
+
+    static explain_task(goal_id: string, task_id: string): Promise<string> {
+        return this.getData(`/api/ai/explain_task/${goal_id}/${task_id}`);
+    }
 }
 
 export default GoalApi;

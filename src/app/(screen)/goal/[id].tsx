@@ -1,6 +1,6 @@
 import { useLocalSearchParams } from "expo-router";
 import { FC, useEffect, useState } from "react";
-import { ScrollView, View } from "react-native";
+import { ActivityIndicator, ScrollView, View } from "react-native";
 import Header from "../../../components/header";
 import { AIIcon, CalendarIcon, DotsIcon, TaskAddIcon } from "../../../../assets/icons";
 import { GoalApi } from "../../../api";
@@ -21,6 +21,7 @@ const GoalDetail: FC = () => {
     const {id} = useLocalSearchParams();
     const [goal, setGoal] = useState<IGoalDetail | null>(null);
     const [addTaskModalVisible, setAddTaskModalVisible] = useState<boolean>(false);
+    const [aiLoading, setAILoading] = useState<boolean>(false);
 
     useEffect(() => {
         GoalApi.get_details(id as string).then(res => {
@@ -36,6 +37,18 @@ const GoalDetail: FC = () => {
             setGoal(res);
         }).catch(err => {
             pushAlert(err.msg, "error");
+        })
+    }
+
+    const onAIAssist = () => {
+        if (!goal) return;
+        setAILoading(true);
+        GoalApi.gen_tasks(goal?._id.$oid).then(res => {
+            setGoal(res);
+        }).catch(err => {
+            pushAlert(err.msg, "error");
+        }).finally(() => {
+            setAILoading(false);
         })
     }
 
@@ -68,11 +81,11 @@ const GoalDetail: FC = () => {
                 {goal.tasks.map(task => (
                     <GoalTask setGoal={setGoal as UpdateFn<IGoalDetail>} task={task} goal={goal} key={task._id.$oid} />
                 ))}
+                <View style={{height: 100}}></View>
             </ScrollView>
-            <View style={{height: 16}}></View>
             
             <View style={{position: "absolute", bottom: 40, width: "100%", flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8}}>
-                <BtnIcon styles={{borderColor: theme.primary.color, borderWidth: 1}} Icon={AIIcon} label="" pallete={{color: theme.nav.color, text: theme.primary.color}} />
+                {!goal.tasks.length ? aiLoading ? <ActivityIndicator/> : <BtnIcon onPress={onAIAssist} styles={{borderColor: theme.primary.color, borderWidth: 1}} Icon={AIIcon} label="" pallete={{color: theme.nav.color, text: theme.primary.color}} /> : <></>}
                 {goal.status === "created" ? <Btn onPress={onStart} label="شروع" pallete={{color: theme.nav.color, text: theme.primary.color}} styles={{borderColor: theme.primary.color, borderWidth: 1, minWidth: 76, height: 40}} /> : <></>}
                 <BtnIcon onPress={() => setAddTaskModalVisible(true)} Icon={TaskAddIcon} label="افزودن وظیفه" pallete={theme.primary} />
             </View>

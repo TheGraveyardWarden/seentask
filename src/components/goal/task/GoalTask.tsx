@@ -1,22 +1,39 @@
 import { FC, useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, TouchableOpacity, View } from "react-native";
 import { Heading, Text } from "../../typo";
 import { getDateStr, getTimeStr } from "../../../utils/date";
 import { get_task_bg, goal_task_time_to_string, is_task_finished } from "../../../utils/parser";
 import { AIIcon } from "../../../../assets/icons";
-import { useThemeStore } from "../../../stores";
-import { FinishGoalTaskModal } from "../modals";
+import { useAlertStore, useThemeStore } from "../../../stores";
+import { ExplainTaskModal, FinishGoalTaskModal } from "../modals";
 import { GoalTaskProps } from "./types";
+import { GoalApi } from "../../../api";
 
 const GoalTask: FC<GoalTaskProps> = ({goal, task, setGoal}) => {
     const {_id, status, time, title, weight, finished_at} = task;
     const theme = useThemeStore(s => s.theme);
+    const pushAlert = useAlertStore(s => s.pushAlert);
     const pallete = get_task_bg(status);
     const [finishModalVisible, setFinishModalVisible] = useState<boolean>(false);
+    const [explainTaskModalVisible, setExplainTaskModalVisible] = useState<boolean>(false);
+    const [text, setText] = useState<string>("");
+    const [aiLoading, setAILoading] = useState<boolean>(false);
 
     const handlePress = () => {
         if (status !== "inprogress") return;
         setFinishModalVisible(true);
+    }
+
+    const onAI = () => {
+        setAILoading(true);
+        GoalApi.explain_task(goal._id.$oid, task._id.$oid).then(res => {
+            setText(res);
+            setExplainTaskModalVisible(true);
+        }).catch(err => {
+            pushAlert(err.msg, "error");
+        }).finally(() => {
+            setAILoading(false);
+        })
     }
 
     return (
@@ -30,8 +47,9 @@ const GoalTask: FC<GoalTaskProps> = ({goal, task, setGoal}) => {
                         </>}
                     </View>
                 </View>
-                <AIIcon color={status === "waiting" ? theme.primary.color : pallete.text} />
+                {aiLoading ? <ActivityIndicator/> : <TouchableOpacity onPress={onAI}><AIIcon color={status === "waiting" ? theme.primary.color : pallete.text} /></TouchableOpacity>}
                 <FinishGoalTaskModal setGoal={setGoal} goal={goal} task={task} setVisible={setFinishModalVisible} visible={finishModalVisible} />
+                <ExplainTaskModal text={text} visible={explainTaskModalVisible} setVisible={setExplainTaskModalVisible} />
             </View>
         </TouchableOpacity>
     )

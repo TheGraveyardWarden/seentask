@@ -24,7 +24,10 @@ const AddGoalTaskModal: FC<ModalProps & AddGoalTaskModalProps> = ({setVisible, v
             setGoal(prev => {
                 return {...prev, tasks: [...prev.tasks, res]}
             });
-            setVisible(false)
+            setVisible(false);
+            setTitle("");
+            setTime({days: 0, hours: 1, minutes: 0});
+            setWeight(1);
         }).catch(err => {
             pushAlert(err.msg, "error");
         });
